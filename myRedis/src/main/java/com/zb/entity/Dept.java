@@ -1,6 +1,7 @@
 package com.zb.entity;
 
 public class Dept {
+    //本地开发
     private Integer id;
     private String deptName;
 
