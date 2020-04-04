@@ -2,6 +2,7 @@ package com.zb.entity;
 
 public class Dept {
     //本地开发
+//别的员工修改的
     private Integer id;
     private String deptName;
 
