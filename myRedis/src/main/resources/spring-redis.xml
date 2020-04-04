@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+    <!--redis连接池-->
+    <bean id="config" class="redis.clients.jedis.JedisPoolConfig">
+        <!--最大存活数-->
+        <property name="maxActive" value="10"/>
+        <!--最大连接数-->
+        <property name="maxIdle" value="50"/>
+        <!--最多等待时间-->
+        <property name="maxWait" value="100000"/>
+        <!--测试是由redis完成的-->
+        <property name="testOnBorrow" value="true"/>
+    </bean>
+
+    <!--连接到redis工厂-->
+    <bean id="connectionFactory" class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory">
+
+        <property name="poolConfig" ref="config"></property>
+        <property name="hostName" value="127.0.0.1"></property>
+        <property name="port" value="6379"></property>
+        <property name="password" value="ok"></property>
+
+    </bean>
+
+    <!--代码中的jedis-->
+    <!--等同于 Jedis jedis=new Jedis("127.0.0.1",6379);这个对象-->
+    <bean id="redisTemplate" class="org.springframework.data.redis.core.RedisTemplate">
+        <property name="connectionFactory" ref="connectionFactory"/>
+        <property name="hashKeySerializer">
+            <bean class="org.springframework.data.redis.serializer.StringRedisSerializer"/>
+        </property>
+        <property name="valueSerializer">
+            <bean class="org.springframework.data.redis.serializer.StringRedisSerializer"/>
+        </property>
+    </bean>
+
+</beans>
